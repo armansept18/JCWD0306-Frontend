@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- ini internal css -->
+    <style>
+      h2 {
+        color: aquamarine;
+        background-color: white;
+      }
+
+      p {
+        color: blueviolet;
+      }
+
+      .mobil2 {
+        color: pink;
+      }
+
+      .mobil {
+        color: yellow;
+      }
+
+      #paragraf {
+        /* class name rule */
+        /* tidak dapat start dari angka */
+        /* symbol dapat menggunakan _ -  */
+        color: green;
+      }
+
+      a[ngasal] {
+        color: rgba(13, 139, 208, 1);
+      }
+
+      .hsl {
+        color: hsl(45, 99%, 5%);
+      }
+      body {
+        background: brown;
+        background: linear-gradient(90deg, blue, yellow);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>ini internal css</h2>
+    <!-- ini inline style -->
+    <p style="color: #e94235">ini inline style</p>
+
+    <p>ini external css</p>
+
+    <p class="mobil mobil2">ini menggunakan class</p>
+    <p id="paragraf" class="mobil">ini menggunakan id</p>
+
+    <p>
+      <a id="a" ngasal="">Jaya jaya jaya!</a>
+    </p>
+    <p class="hsl">ini hsl</p>
+  </body>
+</html>

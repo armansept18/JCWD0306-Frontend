@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Register</title>
+  </head>
+  <body>
+    <center>
+      <h1>Register</h1>
+      <form action="" method="post">
+        <fieldset
+          style="
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            justify-content: center;
+            gap: 2px;
+          "
+        >
+          <legend>Register</legend>
+
+          <input type="text" placeholder="username" />
+          <input
+            type="password"
+            required
+            name=""
+            id=""
+            placeholder="password"
+          />
+
+          <!-- radio button harus bersifat option, sehingga harus memiliki name yang sama -->
+          <span style="text-align: left">
+            <input type="radio" name="gender" id="" />
+            <label>Male</label>
+
+            <input type="radio" name="gender" id="" />
+            <label>Female</label>
+          </span>
+
+          <input
+            placeholder="age"
+            type="number"
+            min="1"
+            max="10"
+            name=""
+            id=""
+          />
+
+          <select name="" id="">
+            <option value="0">Silahkan Pilih makanan favoritmu</option>
+            <option value="1">Telur Gulung</option>
+            <option value="2">Cilok</option>
+            <option value="3">Bakso</option>
+          </select>
+
+          <textarea
+            name=""
+            id=""
+            cols="64"
+            rows="3"
+            placeholder="address"
+          ></textarea>
+
+          <span style="text-align: left">
+            <label for="check">Setuju</label>
+            <input type="checkbox" name="" id="check" />
+          </span>
+          <input type="submit" value="Register" />
+        </fieldset>
+      </form>
+    </center>
+  </body>
+</html>
