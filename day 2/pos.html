@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Position</title>
+
+    <style>
+      div {
+        padding: 20px;
+        color: white;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .static {
+        background: green;
+        position: static;
+        left: 10px;
+        /* posisi static adalah posisi default, untuk menggeser offset kita dapat menggunakan margin tidak dapat
+         menggunakan left,right,... */
+      }
+      .relative {
+        background: blue;
+        position: relative;
+        left: 10px;
+        /* right: 10px;
+        top: 10px;
+        bottom: 10px; */
+        /* posisi static adalah posisi default, untuk menggeser offset kita dapat menggunakan margin
+         atau left,right,... */
+      }
+      .absolute {
+        background: grey;
+        position: absolute;
+      }
+      .fixed {
+        background: red;
+        position: fixed;
+      }
+      .sticky {
+        background: black;
+        position: sticky;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="static">
+      <h1>Static</h1>
+    </div>
+    <div class="relative">
+      <h1>relative</h1>
+    </div>
+    <div class="absolute">
+      <h1>absolute</h1>
+    </div>
+    <div class="fixed">
+      <h1>fixed</h1>
+    </div>
+    <div class="sticky">
+      <h1>sticky</h1>
+    </div>
+  </body>
+</html>

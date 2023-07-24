@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>grid</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      .content {
+        max-width: 960px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /* grid-template-rows: 1fr 2fr 3fr; */
+        /* grid-template-rows: repeat(3, 1fr); */
+        /* grid-template-rows: 100px 200px 300px; */
+        /* grid-auto-rows: 150px; */
+        gap: 10px;
+        /* gap: 50px 0px; */
+        /* grid-column-gap: 20px;
+        grid-row-gap: 50px; */
+        justify-items: right;
+      }
+      .content div {
+        padding: 30px;
+        background-color: burlywood;
+        color: white;
+      }
+      .content div:nth-child(odd) {
+        background-color: cadetblue;
+      }
+
+      /* .kotak1 {
+        grid-column-start: 1;
+        grid-column-end: 4;
+      }
+
+      .kotak2 {
+        grid-column: 4/10;
+      }
+      .kotak3 {
+        grid-column: 1/5;
+        grid-row: 2/4;
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="kotak1">1</div>
+      <div class="kotak2">2</div>
+      <div class="kotak3">3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </div>
+  </body>
+</html>

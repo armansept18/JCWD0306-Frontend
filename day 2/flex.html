@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex</title>
+    <style>
+      /* .flex {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+     
+        max-width: 960px;
+        flex-wrap: wrap;
+        align-items: center;
+      } */
+      /* .flex div {
+        padding: 50px 50px;
+        width: 50px;
+        background-color: blueviolet;
+      } */
+
+      /* 
+      display flex, mengatur content di dalam container sesuai dengan direction dari flex
+      dir flex default adalah row. berarti setiap content di dalam container akan dianggap sebagai 1 baris
+      kalau dir flex adalah column. maka content di dalam conteiner akan dianggap 1 kolom
+     apa bila panjang content melebihi width dari container flex, kita dapat membuat content di dalamnya turun agar tidak 
+     melebihi panjang container. dengan cara menggunakan flex-wrap : wrap .
+     justify content 
+     align items
+
+      */
+
+      .flex2 {
+        display: flex;
+        background-color: black;
+        color: white;
+        width: 500px;
+        height: 500px;
+        /* row */
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex2">hello</div>
+
+    <!-- <div class="flex">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div> -->
+  </body>
+</html>

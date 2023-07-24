@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+
+nav {
+  display: flex;
+  text-transform: uppercase;
+  background: black;
+  font-weight: 500;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+nav a {
+  padding: 12px 24px;
+  text-decoration: none;
+  color: white;
+}
+nav a:hover {
+  background-color: #cccccc;
+  color: black;
+}
+#search:hover {
+  background-color: #ff62ab;
+}
+nav div {
+  display: flex;
+}
+
+.carousel {
+  max-width: 2000px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  align-items: end;
+}
+
+.carousel img {
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+}
+
+.subtitle {
+  color: white;
+  max-width: 330px;
+  max-height: 162px;
+  padding: 32px 16px;
+  position: absolute;
+}
+
+.content {
+  padding: 64px 16px;
+  max-width: 768px;
+  display: flex;
+  flex-direction: column;
+}
+
+.desc {
+  text-align: justify;
+  line-height: 1.5;
+}
+
+.member-list {
+  padding: 30px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.member {
+  width: 255px;
+}
+.member img {
+  max-width: 150px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  margin: 10px 0px;
+}
+
+.tour {
+  /* color: white; */
+  background-color: white;
+  padding: 8px 16px;
+  text-align: left;
+  border: 1px solid #ddd;
+  color: #757575;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sold {
+  height: 22px;
+  padding: 0px 8px;
+  margin: 0px 0px 0px 16px;
+  background-color: #f44336;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.ticket {
+  height: 22px;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  margin: 0px 16px 0px 0px;
+  padding: 0px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.ticket-list {
+  display: flex;
+  padding: 32px 0px;
+  margin: 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ticket-card {
+  width: 245px;
+  background: white;
+  text-align: left;
+}
+
+.ticket-desc {
+  padding: 0.15px 16px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ticket-card img {
+  width: 100%;
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 8px 16px;
+  margin: 0px 0px 16px 0px;
+  width: 107px;
+}
