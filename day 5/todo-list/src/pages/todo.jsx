@@ -17,12 +17,13 @@ const Todo = () => {
     title: "",
     hour: "",
   });
+  const now = new Date();
 
   const submit = () => {
     setTasks([...tasks, data]);
     setData({
       title: "",
-      hour: "",
+      hour: now.getHours() + ":" + now.getMinutes(),
     });
     return alert("berhasil ditambahkan");
   };

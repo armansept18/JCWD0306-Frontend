@@ -104,6 +104,8 @@ body {
   border-radius: 100px;
   border: 0px;
   color: #6e6e6e;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 input:focus {
