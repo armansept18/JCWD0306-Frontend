@@ -1,0 +1,12 @@
+life cycle method react
+
+componentWillMount = The componentDidMount() method is called before the component is rendered.
+
+componentDidMount = The componentDidMount() method is called after the component is rendered.
+
+componentDidUpdate = The componentDidUpdate method is called after the component is updated in the DOM.
+
+componentWillUnmount = The componentWillUnmount method is called when the component is about to be removed from the DOM.
+
+
+
