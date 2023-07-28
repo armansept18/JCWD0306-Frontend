@@ -10,7 +10,8 @@ body {
 .container {
   width: 100vw;
   max-width: 360px;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  margin-bottom: 100px;
 }
 
 .bg {
@@ -112,6 +113,10 @@ input:focus {
   outline: none;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .gap-15 {
   gap: 15px;
 }
@@ -122,6 +127,18 @@ button {
   width: 100%;
   color: white;
   background-color: #faa885;
+  border: 0px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  height: 60px;
+  max-width: 310px;
+  width: 100%;
+  color: white;
+  background-color: #cf7751;
   border: 0px;
   font-size: 18px;
   font-weight: 600;

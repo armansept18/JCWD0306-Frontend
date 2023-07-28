@@ -10,22 +10,55 @@ const Todo = () => {
   const [tasks, setTasks] = useState([
     {
       title: "Learn Programming ",
-      hour: "12pm",
+      hour: "12:00",
     },
   ]);
-  const [data, setData] = useState({
-    title: "",
-    hour: "",
-  });
+
   const now = new Date();
 
+  const [data, setData] = useState({
+    title: "",
+    hour: now.getHours() + ":" + now.getMinutes(),
+  });
+
   const submit = () => {
-    setTasks([...tasks, data]);
+    alert(data.idx);
+    if (data.idx > -1) {
+      const tmp = [...tasks];
+      tmp[data.idx] = data;
+      setTasks([...tmp]);
+    } else {
+      setTasks([...tasks, data]);
+    }
+
+    clear();
+
+    return alert("berhasil ditambahkan");
+  };
+
+  const del = (idx) => {
+    const msg = "Are your sure you want to delete this?";
+    if (window.confirm(msg)) {
+      const tmp = [...tasks];
+      tmp.splice(idx, 1);
+      setTasks(tmp);
+      clear();
+    }
+  };
+
+  const update = (idx) => {
+    const tmp = tasks[idx];
+    setData({
+      ...tmp,
+      idx,
+    });
+  };
+
+  const clear = () => {
     setData({
       title: "",
       hour: now.getHours() + ":" + now.getMinutes(),
     });
-    return alert("berhasil ditambahkan");
   };
 
   return (
@@ -46,7 +79,8 @@ const Todo = () => {
               <Clock />
             </div>
             <div className="center full">
-              <Task tasks={tasks} />
+              {/* //component task */}
+              <Task tasks={tasks} del={del} update={update} />
             </div>
 
             <input
@@ -62,6 +96,7 @@ const Todo = () => {
               type="time"
               placeholder="Task Title"
             />
+            <button onClick={clear}>CLEAR</button>
 
             <button onClick={submit}>SUBMIT</button>
           </div>
