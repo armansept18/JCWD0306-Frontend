@@ -1,25 +1,64 @@
 import { useEffect, useState } from "react";
 import { ProductList } from "../components/product";
 import { Center, Flex } from "@chakra-ui/react";
-import data from "../json/data.json";
+// import data from "../json/data.json";
 import add50 from "../assets/icons8-plus.svg";
 
 import { useDisclosure } from "@chakra-ui/react";
 import { ModalInputProduct } from "../components/modal";
+import { api } from "../api/axios";
 export const ProductListPage = ({ search }) => {
   const [products, setProducts] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // const fetchProducts = async () => {
+  //   try {
+  //     const res = await api.get("/products");
+  //     setProducts([...res.data]);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const fetchProducts = async () => {
+    try {
+      const res = await api.get("/products", {
+        params: { name_like: search },
+      });
+
+      // localhost:2000/products?name=search
+      // like berbeda dengan equal
+      //sepatu , sepatu kuda
+      //api.get("/products?name=" + search)
+      //products?name_like=""
+      setProducts([...res.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    setProducts([...data.products]);
-  }, []);
+    // setFiltered(
+    //   products.filter((prod) =>
+    //     prod.name.toLowerCase().includes(search.toLowerCase())
+    //   )
+    // );
+    fetchProducts();
+  }, [search]);
+  // search =""
+  //search ="y"
+
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
   return (
     <>
       <Center alignItems={"flex-start"} marginTop={"35px"}>
         <ProductList
-          search={search} // untuk filter
+          // search={search} // untuk filter
           products={[...products]} // data
-          setProducts={setProducts} // function untuk mengubah datanya
+          fetchProducts={fetchProducts}
+          // setProducts={setProducts} // function untuk mengubah datanya
         />
         <Flex justifyContent={"right"} bgColor={"blue"}>
           <img
@@ -40,8 +79,7 @@ export const ProductListPage = ({ search }) => {
         <ModalInputProduct
           isOpen={isOpen}
           onClose={onClose}
-          setProducts={setProducts}
-          products={products}
+          fetchProducts={fetchProducts}
         />
       </Center>
     </>

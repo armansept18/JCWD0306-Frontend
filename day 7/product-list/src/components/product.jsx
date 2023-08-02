@@ -1,7 +1,7 @@
 import { Center, Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ModalInputProduct } from "./modal";
-export const ProductCard = ({ product, products, setProducts }) => {
+export const ProductCard = ({ product, fetchProducts }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -35,36 +35,31 @@ export const ProductCard = ({ product, products, setProducts }) => {
       <ModalInputProduct
         isOpen={isOpen}
         onClose={onClose}
-        setProducts={setProducts}
-        products={products}
-        product={product}
+        // setProducts={setProducts}
+        // products={products}
+        // product={product}
+        fetchProducts={fetchProducts}
+        id={product.id}
       />
     </>
   );
 };
 
-export const ProductList = ({ products = [], search = "", setProducts }) => {
-  const [filtered, setFiltered] = useState(products);
+export const ProductList = ({ products = [], fetchProducts }) => {
+  // const [filtered, setFiltered] = useState(products);
   //filter = products
   //filter isinya bisa lebih sedilkit dari products
 
-  useEffect(() => {
-    setFiltered(
-      products.filter((prod) =>
-        prod.name.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search, products]);
-
   return (
     <Grid className="grid-cols-2 sm:grid-cols-4">
-      {filtered?.map((product, idx) => (
+      {products?.map((product, idx) => (
         <GridItem key={idx}>
           <a>
             <ProductCard
               product={product} //satuan
-              products={products} //semua products
-              setProducts={setProducts} // function untuk mengubah product
+              fetchProducts={fetchProducts}
+              // products={products} //semua products
+              // setProducts={setProducts} // function untuk mengubah product
             />
           </a>
         </GridItem>

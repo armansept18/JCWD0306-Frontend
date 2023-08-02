@@ -1,0 +1,27 @@
+json-server 
+method
+GET    /users => menampilkan seluruh array users
+GET    /users/1 => return object id 1 di dalam array users (route params)
+GET    /users?userid=1 => return array dari array users yang useridnya = 1 (query params)
+GET    /users?userid=1&title=Makan Bakso => return array dari array users yang useridnya = 1 dan title = Makan Bakso (query params)
+
+route params return 1 object
+query params return array dimana kita dapat memasukan multiple key untuk filtering
+
+POST   /users => menambahkan data ke dalam array users
+data yang ditambahkan dikirim melalui req.body dalam bentuk json 
+json server akan secara otomatis menambahkan id ke dalam key data object terbaru
+
+DELETE /users/4 => mengahpus data di dalam array users yang memiliki id 4
+
+PATCH  /users/1  => mengupdate data di dalam array users yang memiliki id 1
+data yang diupdate merupakan object yang ditulis di dalam req.body
+
+PUT    /user/1 => mereplace data di dalam array users yang memiliki id 1
+data yang direplace sesuai dengan data yang ditulis di dalam req.body
+
+
+C => POST
+R => GET
+U => PATCH , PUT
+D => DELETE

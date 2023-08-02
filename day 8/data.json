@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "fullname": "udin keren",
+      "email": "test@mail.com",
+      "password": "password",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "fullname": "barbie pink",
+      "email": "barbie@mail.com",
+      "password": "password"
+    },
+    {
+      "fullname": "naruto uzumaki",
+      "email": "naruto@mail.com",
+      "password": "hokage",
+      "id": 3
+    },
+    {
+      "fullname": "sasuke uchiha",
+      "email": "sasuke@mail.com",
+      "password": "naruto",
+      "id": 4
+    }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "title": "Makan Bakso",
+      "hour": "22:00",
+      "userid": 1
+    },
+    {
+      "id": 2,
+      "title": "Belajar Programming",
+      "hour": "22:15",
+      "userid": 1
+    },
+    {
+      "id": 3,
+      "title": "tidur",
+      "hour": "21:00",
+      "userid": 2
+    }
+  ]
+}
