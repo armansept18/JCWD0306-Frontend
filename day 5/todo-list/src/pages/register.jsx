@@ -142,7 +142,7 @@ export const RegisterFormik = () => {
         .required("isi woi")
         .min(5, "min maximal 5 bos")
         .minSymbols(1, "wajib isi 1 simbol"),
-      email: Yup.string().email("ini email bro"),
+      email: Yup.string().email("ini email bro").required("wajib isi"),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -200,7 +200,9 @@ export const RegisterFormik = () => {
                 }
                 required
               />
-              <div style={{ color: "red" }}>{formik.errors.fullname}</div>
+              <div style={{ color: "red", padding: "0px 17px" }}>
+                {formik.errors.fullname}
+              </div>
             </div>
 
             <div style={{ width: "100%" }}>
@@ -211,30 +213,42 @@ export const RegisterFormik = () => {
                 onChange={(e) => formik.setFieldValue("email", e.target.value)}
                 required
               />
-              <div style={{ color: "red" }}>{formik.errors.email}</div>
+              <div style={{ color: "red", padding: "0px 17px" }}>
+                {formik.errors.email}
+              </div>
             </div>
 
-            <input
-              className="input"
-              placeholder="Enter your password"
-              type="password"
-              // onChange={(e) => InputHandler("password", e.target.value)}
-              required
-              onChange={(e) => formik.setFieldValue("password", e.target.value)}
-            />
+            <div style={{ width: "100%" }}>
+              <input
+                className="input"
+                placeholder="Enter your password"
+                type="password"
+                // onChange={(e) => InputHandler("fullname", e.target.value)}
+                onChange={(e) =>
+                  formik.setFieldValue("password", e.target.value)
+                }
+                required
+              />
+              <div style={{ color: "red", padding: "0px 17px" }}>
+                {formik.errors.password}
+              </div>
+            </div>
 
-            <input
-              className="input"
-              placeholder="Conform passwords"
-              type="password"
-              // onChange={(e) =>
-              //   InputHandler("confirmPassword", e.target.value)
-              // }
-              required
-              onChange={(e) =>
-                formik.setFieldValue("confirmPassword", e.target.value)
-              }
-            />
+            <div style={{ width: "100%" }}>
+              <input
+                className="input"
+                placeholder="Enter your confirm password"
+                type="password"
+                // onChange={(e) => InputHandler("fullname", e.target.value)}
+                onChange={(e) =>
+                  formik.setFieldValue("confirmPassword", e.target.value)
+                }
+                required
+              />
+              <div style={{ color: "red", padding: "0px 17px" }}>
+                {formik.errors.confirmPassword}
+              </div>
+            </div>
 
             <button type="submit" onClick={formik.handleSubmit}>
               Register
