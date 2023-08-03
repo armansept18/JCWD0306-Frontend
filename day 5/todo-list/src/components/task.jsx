@@ -20,20 +20,20 @@ const Task = ({ tasks = [], del, update }) => {
   );
 };
 
-const Point = ({ title, hour, idx, del, update }) => {
+const Point = ({ task, hour, id, del, update }) => {
   return (
     <div className="list mb-10 ">
       <div className="center">
-        <div className="point" onClick={() => del(idx)} />
+        <div className="point" onClick={() => del(id)} />
       </div>
       <div
         className="semibold pointer"
         onClick={() => {
-          alert(idx);
-          update(idx);
+          alert(id);
+          update(id);
         }}
       >
-        {title + " " + hour}
+        {task + " " + hour}
       </div>
     </div>
   );

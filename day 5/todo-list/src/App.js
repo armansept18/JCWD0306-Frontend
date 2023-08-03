@@ -3,7 +3,7 @@ import Todo from "./pages/todo";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Login from "./pages/login";
-import Register from "./pages/register";
+import { Register, RegisterFormik } from "./pages/register";
 import Redirect from "./pages/redirect";
 
 function App() {
@@ -41,6 +41,7 @@ function App() {
           path="register"
           element={<Register users={[...users]} setUsers={setUsers} />}
         />
+        <Route path="register2" element={<RegisterFormik />} />
         <Route path="*" element={<Redirect />}></Route>
       </Routes>
     </>

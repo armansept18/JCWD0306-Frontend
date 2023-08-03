@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullname": "udin",
+      "email": "udin@mail.com",
+      "password": "password"
+    },
+    {
+      "fullname": "tono tono",
+      "password": "123",
+      "email": "udin3@mail.com",
+      "id": 2
+    },
+    {
+      "fullname": "tono tono",
+      "password": "123",
+      "email": "udin4@mail.com",
+      "id": 3
+    }
+  ],
+  "todos": [
+    {
+      "task": "makan bakso",
+      "hour": "14:20",
+      "userid": 3,
+      "id": 1
+    },
+    {
+      "task": "minum extrajos",
+      "hour": "14:20",
+      "userid": 3,
+      "id": 2
+    },
+    {
+      "task": "makan mie gelas",
+      "hour": "14:20",
+      "userid": 3,
+      "id": 3
+    },
+    {
+      "task": "nonton dora",
+      "hour": "18:22",
+      "userid": 3,
+      "id": 4
+    }
+  ]
+}

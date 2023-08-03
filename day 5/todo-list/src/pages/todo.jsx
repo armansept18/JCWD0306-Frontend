@@ -7,47 +7,71 @@ import { Task } from "../components/task";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Loading from "../components/loading";
+import { api } from "../api/axios";
 
-const Todo = ({ users = [], tasks, setTasks }) => {
+const Todo = () => {
   const now = new Date();
   const [searchParams, setSearchParams] = useSearchParams();
   const [user, setUser] = useState({});
   const [data, setData] = useState({
-    title: "",
+    task: "",
     hour: now.getHours() + ":" + now.getMinutes(),
   });
 
+  const [tasks, setTasks] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
-  const submit = () => {
-    if (data.idx > -1) {
-      const tmp = [...tasks];
-      tmp[data.idx] = data;
-      setTasks([...tmp]);
-    } else {
-      setTasks([...tasks, data]);
-    }
+  // const submit = () => {
+  //   if (data.idx > -1) {
+  //     const tmp = [...tasks];
+  //     tmp[data.idx] = data;
+  //     setTasks([...tmp]);
+  //   } else {
+  //     setTasks([...tasks, data]);
+  //   }
 
-    clear();
+  //   clear();
 
-    return alert("berhasil ditambahkan");
-  };
+  //   return alert("berhasil ditambahkan");
+  // };
 
-  const del = (idx) => {
+  // const del = (idx) => {
+  //   const msg = "Are your sure you want to delete this?";
+  //   if (window.confirm(msg)) {
+  //     const tmp = [...tasks];
+  //     tmp.splice(idx, 1);
+  //     setTasks(tmp);
+  //     clear();
+  //   }
+  // };
+
+  const del = async (id) => {
     const msg = "Are your sure you want to delete this?";
     if (window.confirm(msg)) {
-      const tmp = [...tasks];
-      tmp.splice(idx, 1);
-      setTasks(tmp);
-      clear();
+      await api.delete(`/todos/${id}`);
+      fetchTasks(user.id);
     }
   };
 
-  const update = (idx) => {
-    const tmp = tasks[idx];
+  const submit = async () => {
+    const tmp = { ...data };
+    if (data.id) {
+      console.log(data);
+      await api.patch(`/todos/${data.id}`, tmp);
+    } else {
+      tmp.userid = user.id;
+      await api.post("/todos", tmp);
+    }
+    await fetchTasks(user.id);
+
+    clear();
+  };
+
+  const update = async (id) => {
+    const res = await api.get(`/todos/${id}`);
     setData({
-      ...tmp,
-      idx,
+      ...res.data,
     });
   };
 
@@ -59,13 +83,39 @@ const Todo = ({ users = [], tasks, setTasks }) => {
   };
 
   useEffect(() => {
-    const qmail = searchParams.get("email"); //test3@mail.com
-    const checkUser = users.find(({ email }) => email == qmail);
-    if (checkUser) setUser(checkUser);
+    console.log(data);
+  }, [data]);
+
+  // useEffect(() => {
+  //   const qmail = searchParams.get("email"); //test3@mail.com
+  //   const checkUser = users.find(({ email }) => email == qmail);
+  //   if (checkUser) setUser(checkUser);
+
+  // }, [users]);
+
+  const fetchUser = async (id) => {
+    const res = await api.get(`/users/${id}`);
+    setUser(res.data);
+  };
+
+  const fetchTasks = async (userid) => {
+    const res = await api.get("/todos", {
+      params: {
+        userid,
+      },
+    });
+    console.log(res);
+    setTasks([...res.data]);
+  };
+
+  useEffect(() => {
+    const { id } = JSON.parse(localStorage.getItem("auth"));
+    fetchUser(id);
+    fetchTasks(id);
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
-  }, [users]);
+  }, []);
 
   return (
     <>
@@ -94,8 +144,8 @@ const Todo = ({ users = [], tasks, setTasks }) => {
 
                 <input
                   className="input"
-                  value={data.title}
-                  onChange={(e) => setData({ ...data, title: e.target.value })}
+                  value={data.task}
+                  onChange={(e) => setData({ ...data, task: e.target.value })}
                   placeholder="Task Title"
                 />
                 <input

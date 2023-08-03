@@ -3,6 +3,7 @@ import { ReactComponent as Shape } from "../assets/brown-shape.svg";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../api/axios";
 
 const Login = ({ users = [] }) => {
   const nav = useNavigate();
@@ -15,19 +16,36 @@ const Login = ({ users = [] }) => {
     setUser({ ...user, [key]: value });
   };
 
-  const login = () => {
-    console.log(users);
-    try {
-      const check = users.find(
-        (cek) => cek.email == user.email && cek.password == user.password
-      );
-      if (check.email) {
-        alert(`welcome ${check.fullname}`);
-        return nav(`/dashboard?email=${check.email}`);
-      }
-    } catch (err) {
-      alert("email/password salah");
-    }
+  // const login = () => {
+  //   console.log(users);
+  //   try {
+  //     const check = users.find(
+  //       (cek) => cek.email == user.email && cek.password == user.password
+  //     );
+  //     if (check.email) {
+  //       alert(`welcome ${check.fullname}`);
+  //       return nav(`/dashboard?email=${check.email}`);
+  //     }
+  //   } catch (err) {
+  //     alert("email/password salah");
+  //   }
+  // };
+
+  const login = async () => {
+    const auth = await api.get("/users", {
+      params: {
+        email: user.email,
+        password: user.password,
+      },
+    });
+
+    if (!auth.data) return alert("email/password salah");
+
+    delete auth.data[0].password;
+
+    localStorage.setItem("auth", JSON.stringify(auth.data[0]));
+    alert("hello");
+    nav("/dashboard");
   };
   return (
     <>
