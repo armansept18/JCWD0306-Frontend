@@ -76,3 +76,7 @@ option[value=""][disabled] {
 option {
   color: black;
 }
+
+select:focus {
+  outline: none;
+}
