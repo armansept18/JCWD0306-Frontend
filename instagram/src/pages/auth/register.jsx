@@ -85,12 +85,14 @@ export const RegisterPage = () => {
 
           <div className="flex max-w-[320px] w-full justify-center  flex-col">
             <select
-              defaultValue={""}
+              required
               className="input-container"
               style={{ padding: "0px 15px" }}
               onChange={(e) => formik.setFieldValue("gender", e.target.value)}
             >
-              <option value="">Choose Gender</option>
+              <option value="" disabled selected hidden>
+                Choose Gender
+              </option>
 
               <option value="male">Male</option>
               <option value="female">Female</option>

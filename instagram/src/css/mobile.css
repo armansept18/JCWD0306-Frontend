@@ -66,3 +66,13 @@
   width: 100%;
   border-bottom: 1px solid #c5c5c5;
 }
+
+select:required:invalid {
+  color: #808080;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+}
