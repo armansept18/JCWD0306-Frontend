@@ -5,9 +5,11 @@ import { ReactComponent as Elipse } from "../assets/Ellipse 11.svg";
 import { ReactComponent as Clock } from "../assets/clock.svg";
 import { Task } from "../components/task";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Loading from "../components/loading";
 import { api } from "../api/axios";
+import { useSelector } from "react-redux";
+import { Navbar } from "../components/navbar";
 
 const Todo = () => {
   const now = new Date();
@@ -17,6 +19,9 @@ const Todo = () => {
     task: "",
     hour: now.getHours() + ":" + now.getMinutes(),
   });
+  const nav = useNavigate();
+
+  const userSelector = useSelector((state) => state.auth);
 
   const [tasks, setTasks] = useState([]);
 
@@ -81,10 +86,9 @@ const Todo = () => {
       hour: now.getHours() + ":" + now.getMinutes(),
     });
   };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(userSelector);
+  // }, [userSelector]);
 
   // useEffect(() => {
   //   const qmail = searchParams.get("email"); //test3@mail.com
@@ -93,10 +97,10 @@ const Todo = () => {
 
   // }, [users]);
 
-  const fetchUser = async (id) => {
-    const res = await api.get(`/users/${id}`);
-    setUser(res.data);
-  };
+  // const fetchUser = async (id) => {
+  //   const res = await api.get(`/users/${id}`);
+  //   setUser(res.data);
+  // };
 
   const fetchTasks = async (userid) => {
     const res = await api.get("/todos", {
@@ -109,9 +113,13 @@ const Todo = () => {
   };
 
   useEffect(() => {
-    const { id } = JSON.parse(localStorage.getItem("auth"));
-    fetchUser(id);
-    fetchTasks(id);
+    // const { id } = JSON.parse(localStorage.getItem("auth"));
+    // fetchUser(id);
+    if (!userSelector.id) {
+      nav("/login");
+    }
+
+    fetchTasks(userSelector?.id);
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
@@ -123,11 +131,14 @@ const Todo = () => {
         <Loading />
       ) : (
         <>
+          <Navbar />
           <div className="bg">
             <Shape className="shape" />
             <div className="center full col gap-10">
               <Elipse />
-              <div className="semibold white">Welcome {user.fullname}</div>
+              <div className="semibold white">
+                Welcome {userSelector.fullname}
+              </div>
             </div>
           </div>
           <div className="center">

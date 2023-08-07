@@ -1,0 +1,9 @@
+npm install @reduxjs/toolkit
+npm install react-redux
+
+
+
+proteksi register, dashboard
+
+navbar
+edit profile

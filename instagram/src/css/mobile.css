@@ -1,0 +1,68 @@
+.mobile {
+  max-width: 390px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.mobile-input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 0px 20px;
+}
+
+.input-container {
+  height: 40px;
+  border-radius: 4px;
+  max-width: 320px;
+  width: 100%;
+  background-color: #eeee;
+  border: 1px solid #c5c5c5;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-button {
+  background-color: #1877f2;
+  color: white;
+  height: 40px;
+  max-width: 320px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.auth-button {
+  background-color: #1877f2;
+}
+
+.facebook-button {
+  color: #385185;
+  font-weight: 600;
+  border-radius: 4px;
+  height: 40px;
+  max-width: 320px;
+  width: 100%;
+  border: 1px solid #c5c5c5;
+}
+
+.google-button {
+  color: #848484;
+  font-weight: 600;
+  border-radius: 4px;
+  height: 40px;
+  max-width: 320px;
+  width: 100%;
+  border: 1px solid #c5c5c5;
+}
+
+.divider {
+  max-height: 50%;
+  /* max-width: 320px; */
+  width: 100%;
+  border-bottom: 1px solid #c5c5c5;
+}

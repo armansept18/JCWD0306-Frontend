@@ -5,6 +5,7 @@ import { api } from "../api/axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
+import { useDispatch, useSelector } from "react-redux";
 export const Register = ({ users = [], setUsers }) => {
   const nav = useNavigate();
   const [user, setUser] = useState({
@@ -14,6 +15,10 @@ export const Register = ({ users = [], setUsers }) => {
     email: "",
   });
 
+  const userSelector = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (userSelector.id) nav("/dashboard");
+  }, []);
   const InputHandler = (key, value) => {
     setUser({ ...user, [key]: value });
   };
@@ -129,6 +134,10 @@ export const Register = ({ users = [], setUsers }) => {
 export const RegisterFormik = () => {
   const nav = useNavigate();
   YupPassword(Yup);
+  const userSelector = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (userSelector.id) nav("/dashboard");
+  }, []);
 
   const formik = useFormik({
     initialValues: {

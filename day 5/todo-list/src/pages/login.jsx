@@ -1,9 +1,11 @@
 import { ReactComponent as LoginShape } from "../assets/login.svg";
 import { ReactComponent as Shape } from "../assets/brown-shape.svg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { types } from "../redux/types";
 
 const Login = ({ users = [] }) => {
   const nav = useNavigate();
@@ -31,6 +33,13 @@ const Login = ({ users = [] }) => {
   //   }
   // };
 
+  const dispatch = useDispatch();
+  const userSelector = useSelector((state) => state.auth);
+  useEffect(() => {
+    console.log(userSelector);
+    if (userSelector.id) nav("/dashboard");
+  }, []);
+
   const login = async () => {
     const auth = await api.get("/users", {
       params: {
@@ -42,6 +51,11 @@ const Login = ({ users = [] }) => {
     if (!auth.data) return alert("email/password salah");
 
     delete auth.data[0].password;
+
+    dispatch({
+      type: types.login,
+      payload: { ...auth.data[0] },
+    });
 
     localStorage.setItem("auth", JSON.stringify(auth.data[0]));
     alert("hello");
