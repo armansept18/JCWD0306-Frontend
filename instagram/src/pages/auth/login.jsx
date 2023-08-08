@@ -8,16 +8,58 @@ import {
 } from "../../assets/icons";
 import { Template } from "../../components/template/template";
 import { useFormik } from "formik";
-
+import { useEffect } from "react";
+import { debounce } from "lodash";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../redux/middlewares/auth-middleware";
+import { useToast } from "@chakra-ui/react";
+import { constant } from "../../constant";
 export const LoginPage = () => {
+  const toast = useToast();
   const [see, setSee] = useState(false);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       username: "",
-      email: "",
       password: "",
     },
+    onSubmit: async (values) => {
+      const result = await dispatch(userLogin(values));
+      if (result === constant.success)
+        return toast({
+          title: "login success",
+          status: "success",
+          isClosable: true,
+          position: "top",
+          duration: 1500,
+        });
+
+      return toast({
+        title: "login failed",
+        description: result,
+        status: "error",
+        position: "top",
+        isClosable: true,
+        duration: 1500,
+      });
+    },
   });
+  //   const handler = (e) =>
+  //     debounce(() => {
+  //       formik.setFieldValue("email", e.target.value);
+  //     }, 300);
+
+  //   const handler = useRef(
+  //     debounce((e) => {
+  //       formik.setFieldValue("username", e.target.value);
+  //     }, 300)
+  //   ).current;
+
+  useEffect(() => {
+    console.log(formik.values);
+  }, [formik.values]);
+
   return (
     <>
       <Template>
@@ -52,7 +94,9 @@ export const LoginPage = () => {
               )}
             </button>
           </div>
-          <button className="auth-button">Log in</button>
+          <button className="auth-button" onClick={formik.handleSubmit}>
+            Log in
+          </button>
           <div className=" text-[13px]">
             Don't have an account?{" "}
             <span>

@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "test",
+      "email": "test@mail.com",
+      "gender": "male",
+      "password": "Password",
+      "bio": "",
+      "image_url": "",
+      "fullname": "account test"
+    }
+  ]
+}

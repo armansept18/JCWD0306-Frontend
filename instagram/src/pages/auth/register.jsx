@@ -93,7 +93,6 @@ export const RegisterPage = () => {
               <option value="" disabled selected hidden>
                 Choose Gender
               </option>
-
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
