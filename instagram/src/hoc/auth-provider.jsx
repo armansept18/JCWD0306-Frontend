@@ -9,10 +9,10 @@ export const AuthProvider = ({ children }) => {
   const userSelector = useSelector((state) => state.auth);
 
   const fetchData = () => {
-    const user = JSON.parse(localStorage.getItem("auth"));
-    if (!user) return setIsLoading(false);
+    const id = localStorage.getItem("auth");
+    if (!id) return setIsLoading(false);
     api
-      .get(`/users/${user.id}`)
+      .get(`/users/${id}`)
       .then((res) => {
         dispatch({
           type: constant.USER_LOGIN,

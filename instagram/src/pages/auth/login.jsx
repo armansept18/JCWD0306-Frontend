@@ -12,13 +12,27 @@ import { useEffect } from "react";
 import { debounce } from "lodash";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../../redux/middlewares/auth-middleware";
+import {
+  userLogin,
+  userLoginWithGoogle,
+  userLoginWithFacebook,
+} from "../../redux/middlewares/auth-middleware";
 import { useToast } from "@chakra-ui/react";
 import { constant } from "../../constant";
+import { useNavigate } from "react-router-dom";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  getAdditionalUserInfo,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../../lib/firebase";
+import { showToast } from "../../lib/toast";
 export const LoginPage = () => {
   const toast = useToast();
   const [see, setSee] = useState(false);
   const dispatch = useDispatch();
+  const nav = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -26,39 +40,77 @@ export const LoginPage = () => {
     },
     onSubmit: async (values) => {
       const result = await dispatch(userLogin(values));
-      if (result === constant.success)
-        return toast({
-          title: "login success",
-          status: "success",
-          isClosable: true,
-          position: "top",
-          duration: 1500,
-        });
-
-      return toast({
-        title: "login failed",
-        description: result,
-        status: "error",
-        position: "top",
-        isClosable: true,
-        duration: 1500,
-      });
+      if (result === constant.success) {
+        nav("/home");
+      }
+      showToast(
+        toast,
+        result,
+        "Login Success",
+        "success",
+        "Login Failed",
+        result
+      );
     },
   });
-  //   const handler = (e) =>
-  //     debounce(() => {
-  //       formik.setFieldValue("email", e.target.value);
-  //     }, 300);
-
-  //   const handler = useRef(
-  //     debounce((e) => {
-  //       formik.setFieldValue("username", e.target.value);
-  //     }, 300)
-  //   ).current;
 
   useEffect(() => {
-    console.log(formik.values);
-  }, [formik.values]);
+    console.log(auth.currentUser);
+  }, []);
+
+  const loginWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    let result = "";
+    await signInWithPopup(auth, provider)
+      .then(async (res) => {
+        console.log(res);
+        await dispatch(userLoginWithGoogle({ ...res.user.providerData[0] }));
+        result = constant.success;
+      })
+      .catch((err) => (result = err.message))
+      .finally(() => {
+        if (result === constant.success) {
+          nav("/home");
+        }
+        showToast(
+          toast,
+          result,
+          "Login Success",
+          "success",
+          "Login Failed",
+          result
+        );
+      });
+  };
+
+  const loginWithFacebook = async () => {
+    const provider = new FacebookAuthProvider();
+    let result = "";
+    await signInWithPopup(auth, provider)
+      .then(async (res) => {
+        let additional = getAdditionalUserInfo(res);
+        console.log(additional);
+        const avatar = additional.profile?.picture?.data?.url;
+        if (avatar) res.user.providerData[0].photoURL = avatar;
+        console.log(auth.currentUser);
+        await dispatch(userLoginWithFacebook({ ...res.user.providerData[0] }));
+        result = constant.success;
+      })
+      .catch((err) => (result = err.message))
+      .finally(() => {
+        if (result === constant.success) {
+          nav("/home");
+        }
+        showToast(
+          toast,
+          result,
+          "Login Success",
+          "success",
+          "Login Failed",
+          result
+        );
+      });
+  };
 
   return (
     <>
@@ -112,7 +164,7 @@ export const LoginPage = () => {
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
 
-          <button className="facebook-button">
+          <button className="facebook-button" onClick={loginWithFacebook}>
             <div className="flex justify-center items-center gap-[5px]">
               <span>
                 <Fb_logo width={"16px"} height={"16px"} />
@@ -120,7 +172,7 @@ export const LoginPage = () => {
               <span>Log in with Facebook </span>
             </div>
           </button>
-          <button className="google-button">
+          <button className="google-button" onClick={loginWithGoogle}>
             <div className="flex justify-center items-center gap-[5px]">
               <span>
                 <Google_logo width={"16px"} height={"16px"} />

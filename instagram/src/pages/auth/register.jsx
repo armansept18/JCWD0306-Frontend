@@ -4,12 +4,18 @@ import { Template } from "../../components/template/template";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
+import { api } from "../../api/axios";
+import { useNavigate } from "react-router-dom";
+import { constant } from "../../constant";
+import { showToast } from "../../lib/toast";
+import { useToast } from "@chakra-ui/react";
 
 export const RegisterPage = () => {
   YupPassword(Yup);
   const [see, setSee] = useState(false);
   const [see2, setSee2] = useState(false);
-
+  const toast = useToast();
+  const nav = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -31,8 +37,22 @@ export const RegisterPage = () => {
         .required("confirm password is a required field")
         .oneOf([Yup.ref("password")], "password does not match"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const res = await api
+        .post("/users", values)
+        .then(() => constant.success)
+        .catch((err) => err.message);
+
+      console.log(res);
+      if (res === constant.success) nav("/login");
+      showToast(
+        toast,
+        res,
+        "Auth Register Success",
+        "new user has been added",
+        "Auth Register Failed",
+        res
+      );
     },
   });
 
