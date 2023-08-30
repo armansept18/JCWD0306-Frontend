@@ -1,50 +1,67 @@
-import { Footer } from "../navigation/footer";
-import { Navbar } from "../navigation/navbar";
-import { ProfileBar } from "../navigation/profile";
-import { SearchBar } from "../navigation/search";
+import { useState } from 'react';
+import { Footer } from '../navigation/footer';
+import { Navbar } from '../navigation/navbar';
+import { ProfileBar } from '../navigation/profile';
+import { SearchBar } from '../navigation/search';
+import { ModalPost } from '../post/post-modal';
 
 export const NavTemplate = ({ children }) => {
-  return (
-    <>
-      <Navbar />
-      <div className="flex justify-center pb-10">
-        <div className="mobile">{children}</div>
-      </div>
-      <Footer />
-    </>
-  );
+ return (
+  <>
+   <Navbar />
+   <div className="flex justify-center pb-10">
+    <div className="mobile">{children}</div>
+   </div>
+   <Footer />
+  </>
+ );
 };
 
 export const Template = ({ children }) => {
-  return (
-    <>
-      <div className="flex justify-center h-screen">
-        <div className="mobile">{children}</div>
-      </div>
-    </>
-  );
+ return (
+  <>
+   <div className="flex justify-center h-screen bg-white">
+    <div className="mobile">{children}</div>
+   </div>
+  </>
+ );
 };
 
-export const SearchTemplate = ({ children }) => {
-  return (
-    <>
-      <SearchBar />
-      <div className="flex justify-center pb-10">
-        <div className="mobile">{children}</div>
-      </div>
-      <Footer />
-    </>
-  );
+export const SearchTemplate = ({ children, doSearch }) => {
+ return (
+  <>
+   <SearchBar doSearch={doSearch} />
+   <div className="flex justify-center pb-10">
+    <div className="mobile">{children}</div>
+   </div>
+   <Footer />
+  </>
+ );
 };
 
 export const ProfileTemplate = ({ children }) => {
-  return (
-    <>
-      <ProfileBar />
-      <div className="flex justify-center pb-10">
-        <div className="mobile">{children}</div>
-      </div>
-      <Footer />
-    </>
-  );
+ const [isOpen, setIsOpen] = useState(false);
+
+ return (
+  <>
+   <ProfileBar setIsOpen={setIsOpen} />
+   <div className="flex justify-center pb-10">
+    <div className="mobile">{children}</div>
+   </div>
+   <Footer />
+   <ModalPost isOpen={isOpen} onClose={() => setIsOpen(false)} />
+  </>
+ );
+};
+
+export const ModalTemplate = ({ children, isOpen }) => {
+ return (
+  <div
+   className={` ${
+    isOpen ? 'modal-edit-profile absolute w-screen  top-0 z-20' : 'hidden'
+   }`}
+  >
+   {children}
+  </div>
+ );
 };

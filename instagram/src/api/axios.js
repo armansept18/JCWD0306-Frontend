@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from 'axios';
 export const api = axios.create({
-  baseURL: "http://localhost:2000",
+ //  baseURL: 'https://mock-api-ig2.glitch.me/',
+ baseURL: 'http://localhost:2500'
 });

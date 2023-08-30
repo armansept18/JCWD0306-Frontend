@@ -1,58 +1,49 @@
-import { PostGrid } from "../../components/post/post-grid";
-import { SearchTemplate } from "../../components/template/template";
+import { useCallback, useEffect, useState } from 'react';
+import { PostGrid } from '../../components/post/post-grid';
+import { SearchTemplate } from '../../components/template/template';
+import { api } from '../../api/axios';
+import debounce from 'lodash.debounce';
 
 export const SearchPage = () => {
-  const posts = [
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-    {
-      image_url:
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/ba/29/5c/img-worlds-of-adventure.jpg?w=1200&h=-1&s=1",
-    },
-  ];
-  return (
-    <>
-      <SearchTemplate>
-        <PostGrid posts={posts} />
-      </SearchTemplate>
-    </>
-  );
+ const [posts, setPosts] = useState([]);
+ const [search, setSearch] = useState('');
+
+ //  const doSearch = (query) => {
+ //   if (!query) return setSearch('');
+
+ //   const debouncedFilter = debounce(() => {
+ //    console.log('====>', query);
+ //    setSearch(query);
+ //   }, 1000);
+ //   debouncedFilter();
+ //  };
+
+ const debouncedFilter = useCallback(
+  debounce((query) => setSearch(query), 500)
+ );
+ const doSearch = (query) => {
+  if (!query) return setSearch('');
+  debouncedFilter(query);
+ };
+
+ const fetchPost = () => {
+  api
+   .get('/posts/search', {
+    params: {
+     search
+    }
+   })
+   .then((res) => setPosts(res.data))
+   .catch((err) => console.log(err));
+ };
+ useEffect(() => {
+  fetchPost();
+ }, [search]);
+ return (
+  <>
+   <SearchTemplate doSearch={doSearch}>
+    <PostGrid posts={posts} />
+   </SearchTemplate>
+  </>
+ );
 };
