@@ -83,7 +83,12 @@ export const userUpdate = (selector, values) => {
    //   if (check.data[0]?.id) throw new Error('username already exist');
    //  }
 
-   const user = await api.patch(`/auth/${selector.id}`, values);
+   const formData = new FormData();
+   Object.entries(values).map((value) => {
+    formData.append(value[0], value[1]);
+   });
+
+   const user = await api.patch(`/auth/${selector.id}`, formData);
    console.log(user);
    dispatch({
     type: constant.USER_LOGIN,

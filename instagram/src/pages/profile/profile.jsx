@@ -6,6 +6,7 @@ import { ProfileStories, StoryCard } from '../../components/story/story';
 import { ProfileTemplate } from '../../components/template/template';
 import { useSelector } from 'react-redux';
 import { api } from '../../api/axios';
+import { useParams } from 'react-router-dom';
 export const ProfilePage = () => {
  // const posts = [
  //   {
@@ -35,15 +36,28 @@ export const ProfilePage = () => {
  // ];
  const [isOpen, setIsOpen] = useState(false);
  const userSelector = useSelector((state) => state.auth);
+ const [user, setUser] = useState({});
  const [posts, setPosts] = useState([]);
- const fetchUserPosts = () => {
+ const avatar_url = process.env.REACT_APP_API_IMAGE_AVATAR_URL;
+ const params = useParams();
+ const fetchUser = () => {
   api
-   .get(`/posts/user/${userSelector.id}`)
+   .get('/auth/username/' + params.username)
+   .then((res) => {
+    setUser(res.data);
+    fetchUserPosts(res.data.id);
+   })
+   .catch((err) => console.log(err));
+ };
+ const fetchUserPosts = (id) => {
+  api
+   .get(`/posts/user/${id}`)
    .then((result) => setPosts(result.data))
    .catch((err) => console.log(err));
  };
  useEffect(() => {
-  fetchUserPosts();
+  fetchUser();
+  // fetchUserPosts();
  }, []);
  return (
   <>
@@ -53,7 +67,7 @@ export const ProfilePage = () => {
      {/* //following followers */}
      <div className="flex items-center justify-between w-full">
       <div className="mx-4">
-       <StoryCard image_url={userSelector.image_url} add={true} />
+       <StoryCard image_url={avatar_url + user?.image_url} add={true} />
       </div>
       <div className="flex p-2 gap-6 text-center mx-5">
        <div>
@@ -73,11 +87,16 @@ export const ProfilePage = () => {
      <div className="w-full ">
       <div className="mx-4">
        {/* username */}
-       <span className="font-semibold">{userSelector.fullname}</span>
+       <span className="font-semibold">{user?.fullname}</span>
        {/* bio */}
-       <div className="">{userSelector.bio}</div>
+       <div className="">{user?.bio}</div>
        {/* buttons */}
-       <div className="profile-button py-2 text-sm">
+       <div
+        className={`profile-button py-2 text-sm `}
+        style={{
+         display: params.username == userSelector.username ? 'flex' : 'none'
+        }}
+       >
         <button className=" grow" onClick={() => setIsOpen(true)}>
          Edit profile
         </button>

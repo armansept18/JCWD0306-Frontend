@@ -11,7 +11,9 @@ import { useDispatch } from 'react-redux';
 import { userUpdate } from '../../redux/middlewares/auth-middleware';
 import { showToast } from '../../lib/toast';
 import { constant } from '../../constant';
+
 export const EditProfile = ({ isOpen, onClose }) => {
+ const avatar_url = process.env.REACT_APP_API_IMAGE_AVATAR_URL;
  const userSelector = useSelector((state) => state.auth);
  const ref = useRef();
  const toast = useToast();
@@ -20,8 +22,9 @@ export const EditProfile = ({ isOpen, onClose }) => {
   initialValues: {
    username: userSelector.username,
    bio: userSelector.bio,
-   image_url: userSelector.image_url,
-   fullname: userSelector.fullname
+   image_url: avatar_url + userSelector.image_url,
+   fullname: userSelector.fullname,
+   image: null
   },
   validationSchema: Yup.object().shape({
    fullname: Yup.string().min(3).required(),
@@ -43,6 +46,7 @@ export const EditProfile = ({ isOpen, onClose }) => {
 
  useEffect(() => {
   console.log(isOpen);
+  console.log(formik.values.image_url);
  }, [isOpen]);
 
  return (
@@ -75,6 +79,8 @@ export const EditProfile = ({ isOpen, onClose }) => {
          onChange={async (e) => {
           const image_url = await renderImage(e);
           formik.setFieldValue('image_url', image_url);
+          formik.setFieldValue('image', e.target.files[0]);
+          console.log(e.target.files[0]);
          }}
         ></input>
        </div>

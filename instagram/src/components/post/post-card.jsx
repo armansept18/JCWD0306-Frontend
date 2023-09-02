@@ -12,11 +12,29 @@ import { useSelector } from 'react-redux';
 import { ModalPost } from './post-modal';
 import { api } from '../../api/axios';
 
-export const PostCard = ({ user, image_url, caption, id }) => {
- const [liked, setLiked] = useState(false);
+export const PostCard = ({
+ user,
+ image_url,
+ caption,
+ id,
+ postlikes,
+ comments
+}) => {
  const userSelector = useSelector((state) => state.auth);
+
+ const avatar_url = process.env.REACT_APP_API_IMAGE_AVATAR_URL;
+
+ //  const [liked, setLiked] = useState(
+ //   postlikes.find((like) => like.user_id == userSelector.id) ? true : false
+ //  );
+ const [totalLikes, setTotalLikes] = useState(postlikes);
+ const [totalComments, setTotalComments] = useState(comments);
+ const [comment, setComment] = useState('');
+ const [showComment, setShowComment] = useState(false);
+
  const [isOpen, setIsOpen] = useState(false);
  const [isEdit, setIsEdit] = useState(false);
+
  const toast = useToast();
  const deletePost = () => {
   const token = localStorage.getItem('auth');
@@ -47,6 +65,31 @@ export const PostCard = ({ user, image_url, caption, id }) => {
    });
  };
 
+ const likePost = () => {
+  api
+   .post('/postlike', {
+    post_id: id,
+    user_id: userSelector.id
+   })
+   .then((result) => {
+    setTotalLikes(result.data);
+   })
+   .catch((err) => console.log(err));
+ };
+
+ const addComment = () => {
+  api
+   .post('/comments', {
+    post_id: id,
+    user_id: userSelector.id,
+    comment
+   })
+   .then((result) => {
+    setTotalComments(result.data);
+    setComment('');
+   });
+ };
+
  useEffect(() => {
   console.log(userSelector.id);
  }, []);
@@ -60,18 +103,17 @@ export const PostCard = ({ user, image_url, caption, id }) => {
    />
 
    <div
-    className="flex justify-between w-full "
-    bg-white
+    className="flex justify-between w-full  "
     style={{ padding: '8px 16px' }}
    >
-    <div className="flex items-center gap-[5px]">
+    <div className="flex items-center gap-[5px]  w-full ">
      <div style={{ padding: '3px', borderRadius: '50%', border: 'none' }}>
       <Avatar
        maxW="34px"
        maxH="34px"
        objectFit={'cover'}
        className="cursor-pointer"
-       src={user?.image_url}
+       src={avatar_url + user?.image_url}
       />
      </div>
      <b>{user?.username}</b>
@@ -104,15 +146,19 @@ export const PostCard = ({ user, image_url, caption, id }) => {
      </div>
     </div>
    </div>
-   <img src={image_url} style={{ aspectRatio: '1' }} />
+   <img src={image_url} style={{ aspectRatio: '1', width: '100vw' }} />
    <div
     className="flex justify-between w-full items-center icons"
     style={{ padding: '8px 15px' }}
    >
     <div className="flex gap-[15px]">
      <Icon
-      as={liked ? FilledLove : Love}
-      onClick={() => setLiked(!liked)}
+      as={
+       totalLikes.find((like) => like.user_id == userSelector.id)
+        ? FilledLove
+        : Love
+      }
+      onClick={likePost}
      ></Icon>
 
      <Comment />
@@ -123,7 +169,8 @@ export const PostCard = ({ user, image_url, caption, id }) => {
     </div>
    </div>
    <div className="w-full " style={{ padding: '0px 15px 5px 15px' }}>
-    Liked by <b>thekamraan</b> and <b>905,235</b> others
+    {/* Liked by <b>thekamraan</b> and <b>905,235</b> others */}
+    <b>{totalLikes.length} Likes</b>
    </div>
    <div
     className="w-full flex flex-wrap"
@@ -140,11 +187,34 @@ export const PostCard = ({ user, image_url, caption, id }) => {
    </div>
 
    <div
-    className="w-full text-gray-400 cursor-pointer"
+    className={`w-full text-gray-400 cursor-pointer
+    }`}
     style={{ padding: '0px 15px 5px 15px' }}
    >
-    View all 103 comments
+    <span
+     className={`${totalComments.length && !showComment ? '' : 'hidden'} `}
+     onClick={() => setShowComment(true)}
+    >
+     View all {totalComments.length} comments
+    </span>
+    <div className={`${showComment ? '' : 'hidden'}`}>
+     {totalComments.map((c, i) => (
+      <div key={i} className="flex flex-wrap gap-1 text-black">
+       {/* <b>{c.user.username}</b> */}
+       <Avatar
+        maxW="24px"
+        maxH="24px"
+        objectFit={'cover'}
+        className="cursor-pointer"
+        src={avatar_url + c.user.image_url}
+       />{' '}
+       {c.comment}{' '}
+      </div>
+     ))}
+     <span onClick={() => setShowComment(false)}>Hide comments</span>
+    </div>
    </div>
+
    <div
     className="w-full text-gray-400"
     style={{
@@ -158,6 +228,11 @@ export const PostCard = ({ user, image_url, caption, id }) => {
      }}
      placeholder="Add a comment..."
      className="w-full text-black"
+     onChange={(e) => setComment(e.target.value)}
+     value={comment}
+     onKeyPress={(e) => {
+      if (e.key === 'Enter') addComment();
+     }}
     />
    </div>
   </>

@@ -2,10 +2,12 @@ import { Avatar } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 export const Stories = () => {
+ const avatar_url = process.env.REACT_APP_API_IMAGE_AVATAR_URL;
+
  const userSelector = useSelector((state) => state.auth);
  return (
   <div className="story-frame">
-   <StoryCard image_url={userSelector.image_url} add={true} />
+   <StoryCard image_url={avatar_url + userSelector.image_url} add={true} />
    <StoryCard />
    <StoryCard />
    <StoryCard />

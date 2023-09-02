@@ -7,6 +7,7 @@ import { useState } from 'react';
 export const Footer = () => {
  const userSelector = useSelector((state) => state.auth);
  const [isOpen, setIsOpen] = useState(false);
+ const avatar_url = process.env.REACT_APP_API_IMAGE_AVATAR_URL;
 
  const nav = useNavigate();
  return (
@@ -28,7 +29,7 @@ export const Footer = () => {
      <Video onClick={() => nav('/explore')} />
      <Avatar
       className="cursor-pointer"
-      src={userSelector.image_url}
+      src={avatar_url + userSelector.image_url}
       maxW={'24px'}
       maxH={'24px'}
       onClick={() => nav('/profile')}

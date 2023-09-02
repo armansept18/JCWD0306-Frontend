@@ -6,6 +6,7 @@ import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { Redirect } from '../pages/redirect/redirect';
 import { SearchPage } from '../pages/search/search';
+import { Verify } from '../pages/verify/verify';
 import { ProtectedPage } from './protected-page';
 
 class RouteClass {
@@ -36,6 +37,9 @@ export const routes = [
  new RouteClass('required', <RequiredPage />, true),
  new RouteClass('search', <SearchPage />, true, false, true),
  new RouteClass('profile', <ProfilePage />, true, false, true),
+ new RouteClass('username/:username', <ProfilePage />, true, false, true),
+
+ new RouteClass('verify/:token', <Verify />),
 
  new RouteClass('*', <Redirect />, false, true)
 ];

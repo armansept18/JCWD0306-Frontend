@@ -9,7 +9,7 @@ export const NavTemplate = ({ children }) => {
  return (
   <>
    <Navbar />
-   <div className="flex justify-center pb-10">
+   <div className="flex justify-center pb-10 ">
     <div className="mobile">{children}</div>
    </div>
    <Footer />
@@ -58,7 +58,7 @@ export const ModalTemplate = ({ children, isOpen }) => {
  return (
   <div
    className={` ${
-    isOpen ? 'modal-edit-profile absolute w-screen  top-0 z-20' : 'hidden'
+    isOpen ? 'modal-edit-profile fixed w-screen left-0 top-0 z-20' : 'hidden'
    }`}
   >
    {children}
