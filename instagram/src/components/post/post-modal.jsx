@@ -21,19 +21,21 @@ export const ModalPost = ({ isOpen, onClose, edit }) => {
  const formik = useFormik({
   initialValues: {
    image_url: '',
-   caption: ''
+   caption: '',
+   image: null
   },
   validationSchema: Yup.object().shape({
    image_url: Yup.string().min(3).required()
   }),
   onSubmit: async (values) => {
    const token = localStorage.getItem('auth');
+   const formData = new FormData();
+   formData.append('caption', values.caption);
+   formData.append('image', values.image);
+   formData.append('user_id', userSelector.id);
    api[edit ? 'patch' : 'post'](
     edit ? `/posts/${edit.id}` : '/posts',
-    {
-     ...values,
-     user_id: userSelector.id
-    },
+    formData,
     {
      params: {
       token,
@@ -113,6 +115,7 @@ export const ModalPost = ({ isOpen, onClose, edit }) => {
          onChange={async (e) => {
           const image_url = await renderImage(e);
           formik.setFieldValue('image_url', image_url);
+          formik.setFieldValue('image', e.target.files[0]);
          }}
         ></input>
        </div>

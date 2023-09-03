@@ -23,17 +23,18 @@ export const Footer = () => {
      style={{ padding: '8px 16px' }}
     >
      <Home onClick={() => nav('/home')} />
-     <Search onClick={() => nav('/search')} />
+     <Search onClick={() => nav('/explore')} />
      <Add onClick={() => setIsOpen(true)} />
 
-     <Video onClick={() => nav('/explore')} />
-     <Avatar
-      className="cursor-pointer"
-      src={avatar_url + userSelector.image_url}
-      maxW={'24px'}
-      maxH={'24px'}
-      onClick={() => nav('/profile')}
-     />
+     <Video onClick={() => nav('/search')} />
+     <a href={`/username/${userSelector.username}`}>
+      <Avatar
+       className="cursor-pointer"
+       src={avatar_url + userSelector.image_url}
+       maxW={'24px'}
+       maxH={'24px'}
+      />
+     </a>
     </div>
    </div>
   </div>

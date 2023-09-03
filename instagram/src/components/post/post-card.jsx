@@ -23,6 +23,7 @@ export const PostCard = ({
  const userSelector = useSelector((state) => state.auth);
 
  const avatar_url = process.env.REACT_APP_API_IMAGE_AVATAR_URL;
+ const post_url = process.env.REACT_APP_API_IMAGE_POST_URL;
 
  //  const [liked, setLiked] = useState(
  //   postlikes.find((like) => like.user_id == userSelector.id) ? true : false
@@ -116,7 +117,9 @@ export const PostCard = ({
        src={avatar_url + user?.image_url}
       />
      </div>
-     <b>{user?.username}</b>
+     <a href={`/username/${user?.username}`}>
+      <b>{user?.username}</b>
+     </a>
     </div>
 
     <div className="flex justify-center items-center">
@@ -146,7 +149,14 @@ export const PostCard = ({
      </div>
     </div>
    </div>
-   <img src={image_url} style={{ aspectRatio: '1', width: '100vw' }} />
+   <img
+    src={post_url + image_url}
+    onError={({ currentTarget }) => {
+     currentTarget.onerror = null;
+     currentTarget.src = image_url;
+    }}
+    style={{ aspectRatio: '1', width: '100vw' }}
+   />
    <div
     className="flex justify-between w-full items-center icons"
     style={{ padding: '8px 15px' }}

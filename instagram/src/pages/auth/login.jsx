@@ -137,9 +137,21 @@ export const LoginPage = () => {
        )}
       </button>
      </div>
-     <button className="auth-button" onClick={formik.handleSubmit}>
-      Log in
-     </button>
+     <div
+      className="input-container flex-col  gap-2"
+      style={{ background: 'none', border: 'none' }}
+     >
+      <a href="/forgot-password">
+       <div className="flex justify-end text-[14px] font-semibold cursor-pointer">
+        Forgot Password
+       </div>
+      </a>
+
+      <button className="auth-button" onClick={formik.handleSubmit}>
+       Log in
+      </button>
+     </div>
+
      <div className=" text-[13px]">
       Don't have an account?{' '}
       <span>

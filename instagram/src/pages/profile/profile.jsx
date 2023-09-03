@@ -7,6 +7,7 @@ import { ProfileTemplate } from '../../components/template/template';
 import { useSelector } from 'react-redux';
 import { api } from '../../api/axios';
 import { useParams } from 'react-router-dom';
+import { Avatar } from '@chakra-ui/react';
 export const ProfilePage = () => {
  // const posts = [
  //   {
@@ -44,6 +45,7 @@ export const ProfilePage = () => {
   api
    .get('/auth/username/' + params.username)
    .then((res) => {
+    console.log(res.data);
     setUser(res.data);
     fetchUserPosts(res.data.id);
    })
@@ -55,10 +57,22 @@ export const ProfilePage = () => {
    .then((result) => setPosts(result.data))
    .catch((err) => console.log(err));
  };
+ const follow = () => {
+  api
+   .post('/follows/', {
+    following_user_id: userSelector?.id,
+    followed_user_id: user.id
+   })
+   .then((res) => {
+    fetchUser();
+   });
+ };
  useEffect(() => {
   fetchUser();
   // fetchUserPosts();
+  console.log(avatar_url + user?.image_url);
  }, []);
+
  return (
   <>
    <EditProfile isOpen={isOpen} onClose={() => setIsOpen(false)} />
@@ -67,19 +81,27 @@ export const ProfilePage = () => {
      {/* //following followers */}
      <div className="flex items-center justify-between w-full">
       <div className="mx-4">
-       <StoryCard image_url={avatar_url + user?.image_url} add={true} />
+       <StoryCard
+        image_url={
+         avatar_url +
+         (user?.id == userSelector.id ? userSelector.image_url : user.image_url)
+        }
+        user={user}
+        add={true}
+       />
+       <img hidden src={avatar_url + user?.image_url}></img>
       </div>
       <div className="flex p-2 gap-6 text-center mx-5">
        <div>
-        <b>0</b>
+        <b>{user?.posts?.length}</b>
         <div className=" text-sm">Posts</div>
        </div>
        <div>
-        <b>591</b>
+        <b>{user?.followed_users?.length}</b>
         <div className=" text-sm">Followers</div>
        </div>
        <div>
-        <b>572</b>
+        <b>{user?.following_users?.length}</b>
         <div className=" text-sm">Following</div>
        </div>
       </div>
@@ -91,16 +113,29 @@ export const ProfilePage = () => {
        {/* bio */}
        <div className="">{user?.bio}</div>
        {/* buttons */}
-       <div
-        className={`profile-button py-2 text-sm `}
-        style={{
-         display: params.username == userSelector.username ? 'flex' : 'none'
-        }}
-       >
-        <button className=" grow" onClick={() => setIsOpen(true)}>
-         Edit profile
-        </button>
-        <button className=" grow">Share profile</button>
+       <div className={`profile-button py-2 text-sm `}>
+        {params.username == userSelector.username ? (
+         <>
+          <button className=" grow" onClick={() => setIsOpen(true)}>
+           Edit profile
+          </button>
+          <button className=" grow">Share profile</button>
+         </>
+        ) : (
+         <>
+          <button className=" grow max-w-[138px] w-full" onClick={follow}>
+           {user?.followed_users?.find(({ following_user_id }) => {
+            return following_user_id == userSelector.id;
+           })
+            ? 'Unfollow'
+            : 'Follow'}
+          </button>
+          <a className="w-full" href={`/message/${user.username}`}>
+           <button className="w-full grow">Send Message</button>
+          </a>
+         </>
+        )}
+
         <button>
          <Suggestion fill="black" color="black" />
         </button>

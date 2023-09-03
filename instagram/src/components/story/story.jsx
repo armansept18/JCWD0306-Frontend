@@ -1,4 +1,5 @@
 import { Avatar } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export const Stories = () => {
@@ -53,8 +54,8 @@ export const StoryCard = ({
      alt=""
      aspectRatio={1}
      style={{
-      width: profile ? '50px' : '60px',
-      height: profile ? '50px' : '60px'
+      width: '50px',
+      height: '50px'
      }}
     />
     <span className={`w-full ${profile ? '' : 'hidden'} text-sm`}>test</span>
