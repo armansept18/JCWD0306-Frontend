@@ -14,7 +14,7 @@ import { AuthProvider } from './hoc/auth-provider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = configureStore({ reducer: rootReducer, middleware: [thunk] });
 root.render(
- // <React.StrictMode>
+ // <React.StrictM de>
  <Provider store={store}>
   <ChakraProvider>
    <BrowserRouter>

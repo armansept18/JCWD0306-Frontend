@@ -8,6 +8,7 @@ export const Footer = () => {
  const userSelector = useSelector((state) => state.auth);
  const [isOpen, setIsOpen] = useState(false);
  const avatar_url = process.env.REACT_APP_API_IMAGE_AVATAR_URL;
+ console.log(userSelector);
 
  const nav = useNavigate();
  return (

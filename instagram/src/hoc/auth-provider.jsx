@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const token = localStorage.getItem('auth');
   if (!token) return setIsLoading(false);
   api
-   .get(`/auth/token/${token}`)
+   .get(`/auth/token/`)
    .then((res) => {
     dispatch({
      type: constant.USER_LOGIN,
@@ -29,9 +29,6 @@ export const AuthProvider = ({ children }) => {
 
  useEffect(() => {
   fetchData();
-  setTimeout(() => {
-   setIsLoading(false);
-  }, 5000);
  }, []);
  useEffect(() => {
   if (userSelector.id) setIsLoading(false);
